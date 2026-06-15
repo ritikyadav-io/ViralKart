@@ -1,0 +1,660 @@
+/* ViralKart Premium DTC Responsive CSS Styling System */
+
+:root {
+  /* Color Palette */
+  --primary: #0F172A;
+  --secondary: #FFFFFF;
+  --accent: #2563EB;
+  --accent-hover: #1D4ED8;
+  --success: #16A34A;
+  --success-hover: #15803D;
+  --bg: #F8FAFC;
+  --border: #E5E7EB;
+  --warning: #EF4444;
+  --warning-bg: #FEF2F2;
+  
+  /* Text Colors */
+  --text-dark: #0F172A;
+  --text-main: #334155;
+  --text-muted: #64748B;
+  --text-light: #94A3B8;
+  
+  /* Typography */
+  --font-family: 'Manrope', sans-serif;
+  
+  /* Layout Default Height (Mobile) */
+  --header-height: 52px;
+}
+
+/* Base Resets */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg);
+  color: var(--text-main);
+  line-height: 1.4;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--font-family);
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* General Layout Containers */
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Mobile-First Typography Defaults */
+h1 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-dark);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+p, span, div, li, label, input, textarea {
+  font-size: 13px;
+}
+
+/* Buttons (Height: 44px on Mobile) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  text-align: center;
+  height: 44px;
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  color: var(--secondary);
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-hover);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(37, 99, 235, 0.05);
+}
+
+.btn-success {
+  background-color: var(--success);
+  color: var(--secondary);
+}
+
+.btn-success:hover {
+  background-color: var(--success-hover);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+}
+
+/* Cards (12px radius on Mobile) */
+.card {
+  background-color: var(--secondary);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+/* Horizontal Scroll Rows with snap */
+.scroll-row {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  padding: 8px 16px 12px 16px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.scroll-row::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-row > * {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+
+/* Announcement Bar Marquee */
+.marquee-wrapper {
+  height: 32px;
+  background-color: var(--accent);
+  color: var(--secondary);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  width: 100%;
+}
+
+.marquee-content {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee-scroll 25s linear infinite;
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 16px;
+}
+
+@keyframes marquee-scroll {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Sticky Header styling */
+.header-sticky {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--secondary);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  z-index: 950;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+
+/* Drawers (Clean Fixed Positions & Slide Transforms) */
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.drawer-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.drawer-left {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 88vw;
+  max-width: 320px;
+  background-color: var(--secondary);
+  z-index: 1010;
+  transform: translateX(-100%);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.drawer-left.open {
+  transform: translateX(0);
+}
+
+.drawer-right {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 88vw;
+  max-width: 350px;
+  background-color: var(--secondary);
+  z-index: 1010;
+  transform: translateX(100%);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.drawer-right.open {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  height: 52px;
+  border-bottom: 1px solid var(--border);
+}
+
+.drawer-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.drawer-footer {
+  padding: 16px;
+  border-top: 1px solid var(--border);
+  background-color: var(--bg);
+}
+
+/* Floating WhatsApp Badge */
+.whatsapp-float {
+  position: fixed;
+  bottom: 30px; /* Moved slightly up */
+  right: 16px;
+  background-color: #25D366;
+  color: var(--secondary);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  z-index: 800;
+  display: flex;
+  align-items: center;
+  justifyContent: center;
+  transition: all 0.2s ease;
+}
+
+/* Shift WhatsApp button up on mobile when sticky buy bar is present */
+body:has(.prodpage-mobile-sticky-buy) .whatsapp-float {
+  bottom: 96px; /* Lifted above mobile buy bar */
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.05);
+}
+
+/* Sticky Bottom Buy Bar (Product detail mobile view) */
+.sticky-buy-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--secondary);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+  padding: 8px 16px calc(8px + env(safe-area-inset-bottom, 12px)) 16px;
+  z-index: 850;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Badges */
+.badge-orange {
+  background-color: #FF7A00;
+  color: white;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.badge-red {
+  background-color: #EF4444;
+  color: white;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.badge-green {
+  background-color: rgba(22, 163, 74, 0.1);
+  color: var(--success);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+/* 2x2 grid for mobile trust bar */
+.grid-cols-4 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 0 16px;
+}
+
+/* Spacing sections */
+section {
+  padding: 20px 0;
+}
+
+.section-title-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding: 0 16px;
+}
+
+.section-title {
+  font-size: 15px !important;
+  font-weight: 800;
+}
+
+.section-link {
+  font-size: 11px !important;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+
+/* ==========================================================================
+   DESKTOP MEDIA QUERY OVERRIDES (Screen sizes 1024px and wider)
+   ========================================================================== */
+
+@media (min-width: 1024px) {
+  :root {
+    --header-height: 70px;
+  }
+  
+  .container {
+    max-width: 1280px;
+  }
+  
+  section {
+    padding: 36px 0;
+  }
+  
+  /* Reset Typography sizes */
+  h1 {
+    font-size: 38px !important;
+    line-height: 1.2;
+  }
+  
+  h2 {
+    font-size: 24px !important;
+  }
+  
+  h3 {
+    font-size: 18px !important;
+  }
+  
+  p, span, div, li, label, input, textarea {
+    font-size: 15px;
+  }
+  
+  .section-title {
+    font-size: 24px !important;
+  }
+  
+  .section-link {
+    font-size: 14px !important;
+  }
+  
+  /* Buttons */
+  .btn {
+    font-size: 14px;
+    height: 48px;
+    padding: 12px 24px;
+  }
+  
+  /* Cards */
+  .card {
+    border-radius: 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  }
+  
+  /* Reset Grids to normal columns */
+  .grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  
+  /* Drawer resets to overlay sidebar instead of full viewport */
+  .drawer-left {
+    width: 320px;
+  }
+  
+  .drawer-right {
+    width: 450px;
+  }
+  
+  /* Hide Mobile Sticky Buy Bar on Desktop since direct buttons exist */
+  .sticky-buy-bar {
+    display: none !important;
+  }
+  
+  /* Floating WhatsApp icon position adjustment */
+  .whatsapp-float {
+    bottom: 36px;
+    right: 36px;
+    width: 56px;
+    height: 56px;
+    font-size: 28px;
+  }
+}
+
+/* ==========================================================================
+   SHOPIFY PRODUCT DESCRIPTION — RICH HTML STYLES
+   ========================================================================== */
+
+.shopify-description-content {
+  font-size: 13px !important;
+  color: #334155 !important;
+  line-height: 1.7 !important;
+  font-family: var(--font-family) !important;
+}
+
+/* Force override all inline font styling to match our design system */
+.shopify-description-content *,
+.shopify-description-content span,
+.shopify-description-content p,
+.shopify-description-content div {
+  font-family: var(--font-family) !important;
+  background-color: transparent !important;
+}
+
+.shopify-description-content p {
+  margin: 0 0 14px 0 !important;
+  font-size: 13px !important;
+  color: #475569 !important;
+  line-height: 1.7 !important;
+}
+
+.shopify-description-content p:last-child {
+  margin-bottom: 0 !important;
+}
+
+.shopify-description-content ul,
+.shopify-description-content ol {
+  margin: 14px 0 !important;
+  padding-left: 0 !important;
+  list-style: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+
+.shopify-description-content ul li {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+  font-size: 13px !important;
+  color: #1E293B !important;
+  font-weight: 600 !important;
+  line-height: 1.5 !important;
+  background: #F0F9FF !important;
+  border: 1px solid #DBEAFE !important;
+  border-radius: 8px !important;
+  padding: 10px 12px !important;
+}
+
+.shopify-description-content ul li::before {
+  content: '✓' !important;
+  color: #2563EB !important;
+  font-weight: 900 !important;
+  font-size: 12px !important;
+  flex-shrink: 0 !important;
+  margin-top: 1px !important;
+}
+
+.shopify-description-content ol li {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+  font-size: 13px !important;
+  color: #1E293B !important;
+  font-weight: 600 !important;
+  line-height: 1.5 !important;
+  background: #F8FAFC !important;
+  border: 1px solid #E5E7EB !important;
+  border-radius: 8px !important;
+  padding: 10px 12px !important;
+}
+
+.shopify-description-content h1,
+.shopify-description-content h2,
+.shopify-description-content h3,
+.shopify-description-content h4 {
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+  margin: 22px 0 10px 0 !important;
+  padding-left: 8px !important;
+  border-left: 3px solid #2563EB !important;
+  line-height: 1.35 !important;
+}
+
+.shopify-description-content strong,
+.shopify-description-content b {
+  font-weight: 800 !important;
+  color: #0F172A !important;
+}
+
+.shopify-description-content br {
+  line-height: 1 !important;
+}
+
+.shopify-description-content table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin: 16px 0 !important;
+  font-size: 12px !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  border: 1px solid #E5E7EB !important;
+}
+
+.shopify-description-content table th {
+  background: #F1F5F9 !important;
+  color: #0F172A !important;
+  font-weight: 800 !important;
+  padding: 10px 12px !important;
+  text-align: left !important;
+  font-size: 12px !important;
+  border-bottom: 1px solid #E5E7EB !important;
+}
+
+.shopify-description-content table td {
+  padding: 8px 12px !important;
+  color: #374151 !important;
+  font-size: 12px !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+}
+
+.shopify-description-content table tr:last-child td {
+  border-bottom: none !important;
+}
+
+.shopify-description-content img {
+  display: none !important;
+}
+
+@media (min-width: 1024px) {
+  .shopify-description-content {
+    font-size: 14px !important;
+  }
+  .shopify-description-content p,
+  .shopify-description-content ul li,
+  .shopify-description-content ol li {
+    font-size: 14px !important;
+  }
+}
+
+/* Page transitions style */
+.page-fade-in {
+  animation: pageFadeIn 0.25s ease-out forwards;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
