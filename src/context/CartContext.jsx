@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { categories as mockCategories } from '../data/products';
+import { categories as mockCategories, products as mockProducts, trendingProducts as mockTrending } from '../data/products';
 import { fetchShopifyData } from '../utils/shopify';
 
 export const CartContext = createContext();
@@ -38,31 +38,49 @@ export const CartProvider = ({ children }) => {
     let active = true;
     async function loadShopify() {
       setIsLoading(true);
-      const result = await fetchShopifyData();
-      if (active) {
-        if (result && result.products && result.products.length > 0) {
-          setProductsList(result.products);
-          const derivedTrending = result.products.slice(0, 6).map(p => ({
-            id: p.id,
-            variantId: p.variantId,
-            name: p.title,
-            image: p.images[0],
-            images: p.images,
-            price: p.price,
-            comparePrice: p.comparePrice,
-            slug: p.slug,
-            rating: p.rating
-          }));
-          setTrendingProductsList(derivedTrending);
+      try {
+        const result = await fetchShopifyData();
+        if (active) {
+          if (result && result.products && result.products.length > 0) {
+            setProductsList(result.products);
+            const derivedTrending = result.products.slice(0, 6).map(p => ({
+              id: p.id,
+              variantId: p.variantId,
+              name: p.title,
+              image: p.images[0],
+              images: p.images,
+              price: p.price,
+              comparePrice: p.comparePrice,
+              slug: p.slug,
+              rating: p.rating
+            }));
+            setTrendingProductsList(derivedTrending);
+          } else {
+            console.warn("Shopify products empty or failed to load. Falling back to mock database.");
+            setProductsList(mockProducts);
+            setTrendingProductsList(mockTrending);
+          }
+          if (result && result.collections && result.collections.length > 0) {
+            const hasBestSellers = result.collections.some(c => c.slug === 'best-sellers');
+            const finalCollections = hasBestSellers 
+              ? result.collections 
+              : [...result.collections, { id: 'best-sellers', name: 'Best Sellers', icon: '⭐', slug: 'best-sellers', image: 'https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?w=500&auto=format&fit=crop&q=80' }];
+            setCategoriesList(finalCollections);
+          } else {
+            setCategoriesList(mockCategories);
+          }
         }
-        if (result && result.collections && result.collections.length > 0) {
-          const hasBestSellers = result.collections.some(c => c.slug === 'best-sellers');
-          const finalCollections = hasBestSellers 
-            ? result.collections 
-            : [...result.collections, { id: 'best-sellers', name: 'Best Sellers', icon: '⭐', slug: 'best-sellers', image: 'https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?w=500&auto=format&fit=crop&q=80' }];
-          setCategoriesList(finalCollections);
+      } catch (error) {
+        console.error('Error loading Shopify data:', error);
+        if (active) {
+          setProductsList(mockProducts);
+          setTrendingProductsList(mockTrending);
+          setCategoriesList(mockCategories);
         }
-        setIsLoading(false);
+      } finally {
+        if (active) {
+          setIsLoading(false);
+        }
       }
     }
     loadShopify();

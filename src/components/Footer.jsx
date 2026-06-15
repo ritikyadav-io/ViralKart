@@ -150,29 +150,6 @@ const Footer = ({ onNavigate }) => {
             <p style={{ fontSize: '12px', color: 'var(--text-light)', margin: 0 }} className="newsletter-text-align">
               We appreciate your business! Feel free to reach out to our team if you need any assistance.
             </p>
-            <button
-              onClick={() => alert(`Thank you for choosing ${STORE_NAME}! We hope you love your viral purchases.`)}
-              style={{
-                height: '44px',
-                backgroundColor: 'rgba(255,255,255,0.1)',
-                color: 'white',
-                border: '1px solid rgba(255,255,255,0.15)',
-                borderRadius: '8px',
-                fontSize: '13px',
-                fontWeight: '700',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                transition: 'all 0.2s ease',
-              }}
-              onMouseEnter={e => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.15)'}
-              onMouseLeave={e => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)'}
-              className="newsletter-btn"
-            >
-              ❤️ Thank You!
-            </button>
           </div>
 
         </div>

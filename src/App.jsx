@@ -134,25 +134,26 @@ function App() {
     } else {
       if (slug) {
         targetPath = `/collections/${slug}`;
+        
+        // Scroll to best-sellers instantly first to prevent layout collapse jump!
+        const el = document.getElementById('best-sellers');
+        if (el) {
+          const top = el.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top, behavior: 'auto' });
+        } else {
+          window.scrollTo(0, 0);
+        }
+
         setActiveCategory(slug);
         
         if (wasNotHome) {
-          window.scrollTo(0, 0);
           setTimeout(() => {
-            const el = document.getElementById('best-sellers');
-            if (el) {
-              const top = el.getBoundingClientRect().top + window.scrollY - 80;
+            const elNew = document.getElementById('best-sellers');
+            if (elNew) {
+              const top = elNew.getBoundingClientRect().top + window.scrollY - 80;
               window.scrollTo({ top, behavior: 'auto' });
             }
           }, 60);
-        } else {
-          setTimeout(() => {
-            const el = document.getElementById('best-sellers');
-            if (el) {
-              const top = el.getBoundingClientRect().top + window.scrollY - 80;
-              window.scrollTo({ top, behavior: 'smooth' });
-            }
-          }, 120);
         }
       } else {
         targetPath = '/';
@@ -166,15 +167,6 @@ function App() {
 
   const handleSelectCategory = (categorySlug) => {
     setActiveCategory(categorySlug);
-    if (categorySlug) {
-      setTimeout(() => {
-        const el = document.getElementById('best-sellers');
-        if (el) {
-          const top = el.getBoundingClientRect().top + window.scrollY - 80;
-          window.scrollTo({ top, behavior: 'smooth' });
-        }
-      }, 120);
-    }
   };
 
   return (

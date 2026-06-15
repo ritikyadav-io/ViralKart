@@ -3,21 +3,6 @@ import { CartContext } from '../context/CartContext';
 
 const BestSellers = ({ searchQuery, activeCategory, onNavigate }) => {
   const { addToCart, wishlist, toggleWishlist, addToRecentlyViewed, products, isLoading } = useContext(CartContext);
-  const [isFiltering, setIsFiltering] = React.useState(false);
-  const [prevCategory, setPrevCategory] = React.useState(activeCategory);
-  const [prevSearch, setPrevSearch] = React.useState(searchQuery);
-
-  React.useEffect(() => {
-    if (activeCategory !== prevCategory || searchQuery !== prevSearch) {
-      setIsFiltering(true);
-      setPrevCategory(activeCategory);
-      setPrevSearch(searchQuery);
-      const timer = setTimeout(() => {
-        setIsFiltering(false);
-      }, 250);
-      return () => clearTimeout(timer);
-    }
-  }, [activeCategory, searchQuery, prevCategory, prevSearch]);
 
   // Filter products based on search query & active category
   const filteredProducts = products.filter((product) => {
@@ -67,7 +52,7 @@ const BestSellers = ({ searchQuery, activeCategory, onNavigate }) => {
     onNavigate('product', product.slug);
   };
 
-  if (isLoading || isFiltering) {
+  if (isLoading) {
     return (
       <section style={{ padding: '16px 0', backgroundColor: 'var(--bg)' }} className="bestsellers-section-padding">
         <div className="container bestsellers-container">
@@ -249,6 +234,9 @@ const BestSellers = ({ searchQuery, activeCategory, onNavigate }) => {
 
       <style>{`
         /* Mobile defaults */
+        #best-sellers {
+          min-height: 480px;
+        }
         .bestsellers-container {
           padding: 0;
         }
@@ -329,6 +317,9 @@ const BestSellers = ({ searchQuery, activeCategory, onNavigate }) => {
 
         /* Desktop overrides */
         @media (min-width: 1024px) {
+          #best-sellers {
+            min-height: 700px !important;
+          }
           .bestsellers-section-padding {
             padding: 36px 0 !important;
           }
