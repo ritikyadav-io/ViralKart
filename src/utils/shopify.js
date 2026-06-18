@@ -4,7 +4,9 @@ export const STORE_NAME = import.meta.env.VITE_STORE_NAME || 'ViralKart';
 function getProductMetadataByProduct(category, title, images, idNum) {
   const t = title.toLowerCase();
   const cleanTitle = title.replace(/["']/g, ''); // strip quotes
-  const firstWord = cleanTitle.split(' ')[0] || 'Product';
+  const rawFirstWord = cleanTitle.split(' ')[0] || 'Product';
+  const cleanFirstWord = rawFirstWord.replace(/[^a-zA-Z0-9]/g, '');
+  const firstWord = cleanFirstWord.charAt(0).toUpperCase() + cleanFirstWord.slice(1) || 'Product';
   
   let benefits = [];
   let howItWorks = [];
