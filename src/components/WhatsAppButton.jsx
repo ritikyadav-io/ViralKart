@@ -1,68 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { STORE_NAME } from '../utils/shopify';
 
 const WhatsAppButton = () => {
-  const [showPopup, setShowPopup] = useState(false);
   const whatsappUrl = `https://wa.me/918824318839?text=Hi%20${encodeURIComponent(STORE_NAME)},%20I%27m%20interested%20in%20your%20products.`;
-
-  useEffect(() => {
-    // Show popup message after 3 seconds
-    const timer = setTimeout(() => {
-      setShowPopup(true);
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <div style={{ position: 'fixed', bottom: '30px', right: '16px', zIndex: 800, display: 'flex', alignItems: 'center', gap: '8px', pointerEvents: 'auto' }} className="whatsapp-container-wrapper">
-      {showPopup && (
-        <div 
-          style={{
-            backgroundColor: 'white',
-            color: '#1E293B',
-            padding: '8px 12px',
-            borderRadius: '12px',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-            fontSize: '12px',
-            fontWeight: '700',
-            border: '1px solid #E2E8F0',
-            position: 'relative',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            animation: 'fadeInLeft 0.3s ease',
-            whiteSpace: 'nowrap'
-          }}
-        >
-          <span>💬 Need Help? Chat with us!</span>
-          <button 
-            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowPopup(false); }}
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              color: '#94A3B8',
-              fontSize: '10px',
-              padding: '0 2px'
-            }}
-          >
-            ✕
-          </button>
-          {/* Small tail arrow pointing to the whatsapp icon */}
-          <div style={{
-            position: 'absolute',
-            right: '-6px',
-            top: '50%',
-            transform: 'translateY(-50%) rotate(45deg)',
-            width: '10px',
-            height: '10px',
-            backgroundColor: 'white',
-            borderRight: '1px solid #E2E8F0',
-            borderTop: '1px solid #E2E8F0'
-          }} />
-        </div>
-      )}
-      
       <a 
         href={whatsappUrl} 
         target="_blank" 
@@ -93,10 +36,6 @@ const WhatsAppButton = () => {
       </a>
       
       <style>{`
-        @keyframes fadeInLeft {
-          from { opacity: 0; transform: translateX(10px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
         /* Mobile adjust when buy bar is present */
         body:has(.prodpage-mobile-sticky-buy) .whatsapp-container-wrapper {
           bottom: 96px !important;

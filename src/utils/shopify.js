@@ -953,15 +953,38 @@ export async function fetchShopifyData() {
       'best-sellers': '⭐'
     };
     
+    const usedImages = new Set();
     const collections = orderedSlugs.map(cat => {
-      let imgUrl;
+      let imgUrl = null;
       if (cat === 'viral') {
-        imgUrl = products.find(p => p.price >= 199 && p.price <= 399)?.images[0] ||
-                 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500&auto=format&fit=crop&q=80';
+        const found = products.find(p => p.price >= 199 && p.price <= 399 && !usedImages.has(p.images[0]));
+        if (found) {
+          imgUrl = found.images[0];
+          usedImages.add(imgUrl);
+        } else {
+          const fallback = products.find(p => p.price >= 199 && p.price <= 399);
+          imgUrl = fallback ? fallback.images[0] : 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500&auto=format&fit=crop&q=80';
+        }
       } else {
-        imgUrl = products.find(p => p.category === cat)?.images[0] || 
-                 products.find(p => p.category === 'best-sellers')?.images[0] || 
-                 'https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?w=500&auto=format&fit=crop&q=80';
+        const found = products.find(p => p.category === cat && !usedImages.has(p.images[0]));
+        if (found) {
+          imgUrl = found.images[0];
+          usedImages.add(imgUrl);
+        } else {
+          const fallback = products.find(p => p.category === cat);
+          if (fallback) {
+            imgUrl = fallback.images[0];
+          } else {
+            const anyUnused = products.find(p => !usedImages.has(p.images[0]));
+            if (anyUnused) {
+              imgUrl = anyUnused.images[0];
+              usedImages.add(imgUrl);
+            } else {
+              imgUrl = products.find(p => p.category === 'best-sellers')?.images[0] || 
+                       'https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?w=500&auto=format&fit=crop&q=80';
+            }
+          }
+        }
       }
       return {
         id: cat,
